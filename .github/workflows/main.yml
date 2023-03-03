@@ -1,0 +1,14 @@
+name: rank
+on:
+  schedule:
+    - cron: '30 * * * *'
+jobs:
+  work:
+    runs-on: ubuntu-latest
+    steps:
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.07'
+    
+    run: pip install -r requirement.txt
+    run: python3 weibo_hot_band.py
