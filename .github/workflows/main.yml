@@ -8,6 +8,6 @@ jobs:
     steps:
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.07'
+          python-version: '3.7'
       - run: pip install -r requirement.txt
       - run: run python .\bin.py
