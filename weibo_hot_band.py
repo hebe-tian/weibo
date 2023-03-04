@@ -26,7 +26,3 @@ class WeiboApi:
 
         except Exception as e:
             return logging.exception(e)
-
-        
-test = WeiboApi()
-print(test.weibo_hot_band())
