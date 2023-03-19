@@ -31,3 +31,33 @@ class WeiboApi:
 
         except Exception as e:
             return logging.exception(e)
+
+    def weibo_topic_band(self):
+        path = '/ajax/statuses/topic_band'
+        params = {
+            'sid': 'v_weibopro',
+            'category': 'all'
+        }
+        topic_response = requests.get(self.url + path, params=params)
+        topic_response = json.loads(topic_response.text)
+        try:
+            total = jsonpath.jsonpath(topic_response, '$.data.total_data_num')
+            params['count'] = total[0]
+
+        except Exception:
+            return 'Total false'
+        
+        topic_response = requests.get(self.url + path, params=params)
+        topic_response = json.loads(topic_response.text)
+        hot_topic = {}
+        try:
+            topic_list = jsonpath.jsonpath(topic_response, '$.data.statuses[*].topic')
+            summary_list = jsonpath.jsonpath(topic_response, '$.data.statuses[*].summary')
+            for i in range(len(topic_list)):
+                if summary_list[i] == '':
+                    summary_list[i] = false
+                hot_topic[topic_list[i]] = summary_list[i]
+            return hot_topic
+
+        except Exception as e:
+            return logging.exception(e)
