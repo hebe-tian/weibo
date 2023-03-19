@@ -18,6 +18,9 @@ class WeiboApi:
         hot_band_response = json.loads(hot_band_response.text)
         band_list = {}
         try:
+            gov_note = jsonpath.jsonpath(hot_band_response, '$.data.hotgov.note')
+            gov_num = jsonpath.jsonpath(hot_band_response, '$.data.hotgov.num')
+            band_list[gov_note[0]] = 'gov'
             note_list = jsonpath.jsonpath(hot_band_response, '$.data.band_list[*].note')
             num_list = jsonpath.jsonpath(hot_band_response, '$.data.band_list[*].num')
             for i in range(len(note_list)):
