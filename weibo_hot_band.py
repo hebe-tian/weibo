@@ -20,7 +20,7 @@ class WeiboApi:
         try:
             # gov hot band->name and gov_tag
             gov_note = jsonpath.jsonpath(hot_band_response, '$.data.hotgov.note')
-            gov_num = jsonpath.jsonpath(hot_band_response, '$.data.hotgov.num')
+            # gov_num = jsonpath.jsonpath(hot_band_response, '$.data.hotgov.num')
             band_list[gov_note[0]] = 'gov'
             # social hot band->name and hot_num
             note_list = jsonpath.jsonpath(hot_band_response, '$.data.band_list[*].note')
@@ -55,7 +55,7 @@ class WeiboApi:
             summary_list = jsonpath.jsonpath(topic_response, '$.data.statuses[*].summary')
             for i in range(len(topic_list)):
                 if summary_list[i] == '':
-                    summary_list[i] = false
+                    summary_list[i] = False
                 hot_topic[topic_list[i]] = summary_list[i]
             return hot_topic
 
