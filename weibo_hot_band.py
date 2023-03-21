@@ -38,26 +38,38 @@ class WeiboApi:
             'sid': 'v_weibopro',
             'category': 'all'
         }
-        topic_response = requests.get(self.url + path, params=params)
-        topic_response = json.loads(topic_response.text)
-        try:
-            total = jsonpath.jsonpath(topic_response, '$.data.total_data_num')
-            params['count'] = total[0]
+        page = 1
+        params['page'] = page
 
-        except Exception:
-            return 'Total false'
-        
         topic_response = requests.get(self.url + path, params=params)
-        topic_response = json.loads(topic_response.text)
-        hot_topic = {}
         try:
-            topic_list = jsonpath.jsonpath(topic_response, '$.data.statuses[*].topic')
-            summary_list = jsonpath.jsonpath(topic_response, '$.data.statuses[*].summary')
-            for i in range(len(topic_list)):
-                if summary_list[i] == '':
-                    summary_list[i] = False
-                hot_topic[topic_list[i]] = summary_list[i]
-            return hot_topic
-
+            topic_response = json.loads(topic_response.text)
         except Exception as e:
             return logging.exception(e)
+
+        hot_topic = {}
+
+        while(page * 10 < jsonpath.jsonpath(topic_response, '$.data.total_data_num')[0]):
+            params['page'] = page
+            topic_response = requests.get(self.url + path, params=params)
+            try:
+                topic_response = json.loads(topic_response.text)
+            except Exception as e:
+                return logging.exception(e)
+
+            try:
+                topic_list = jsonpath.jsonpath(topic_response, '$.data.statuses[*].topic')
+                summary_list = jsonpath.jsonpath(topic_response, '$.data.statuses[*].summary')
+
+                for i in range(len(topic_list)):
+                    if summary_list[i] == '':
+                        summary_list[i] = False
+                    hot_topic[topic_list[i]] = summary_list[i]
+
+                page += 1
+
+            except Exception as e:
+                return logging.exception(e)
+
+
+        return hot_topic
