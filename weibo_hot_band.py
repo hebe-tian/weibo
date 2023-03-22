@@ -53,13 +53,12 @@ class WeiboApi:
             'category': 'all'
         }
         hot_topic = {}
-
         for page in range(1, max_page):
             params['page'] = page
-            topic_response = requests.get(self.url + path, params=params)
-            topic_response = json.loads(topic_response.text)
 
             try:
+                topic_response = requests.get(self.url + path, params=params)
+                topic_response = json.loads(topic_response.text)
                 topic_list = jsonpath.jsonpath(topic_response, '$.data.statuses[*].topic')
                 summary_list = jsonpath.jsonpath(topic_response, '$.data.statuses[*].summary')
 
