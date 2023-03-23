@@ -6,6 +6,7 @@ import requests
 import json
 import jsonpath
 import logging
+import time
 
 
 class WeiboApi:
@@ -71,5 +72,7 @@ class WeiboApi:
 
             except Exception as e:
                 return logging.exception(e)
+
+            time.sleep(2)
 
         return hot_topic
