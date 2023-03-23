@@ -33,28 +33,14 @@ class WeiboApi:
         except Exception as e:
             return logging.exception(e)
 
-    def weibo_topic_num(self):
-        path = '/ajax/statuses/topic_band'
-        params = {
-            'sid': 'v_weibopro',
-            'category': 'all'
-        }
-        topic_response = requests.get(self.url + path, params=params)
-        topic_response = json.loads(topic_response.text)
-        try:
-            topic_num = jsonpath.jsonpath(topic_response, '$.data.total_data_num')[0]
-            return topic_num
-        except Exception as e:
-            return logging.exception(e)
-
-    def weibo_topic_band(self, max_page):
+    def weibo_topic_band(self):
         path = '/ajax/statuses/topic_band'
         params = {
             'sid': 'v_weibopro',
             'category': 'all'
         }
         hot_topic = {}
-        for page in range(1, max_page):
+        for page in (1, 2):
             params['page'] = page
 
             try:
@@ -68,11 +54,7 @@ class WeiboApi:
                         summary_list[i] = False
                     hot_topic[topic_list[i]] = summary_list[i]
 
-                page += 1
-
             except Exception as e:
                 return logging.exception(e)
-
-            time.sleep(2)
 
         return hot_topic
