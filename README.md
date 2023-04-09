@@ -9,4 +9,8 @@
 在main.py中调用
 * hot_band`weibo_hot_band()`  
 * topic_band先用`weibo_topic_num()`获取总num，然后传page来使用`weibo_topic_band`获取话题榜单  
-使用GitHub Actions定时执行main.py，打印weibo返回的数据(lenth和内容)  
+
+## local_file  
+* read_content方法读取本地文件中的热搜榜单
+* save_content方法把获取到的热搜榜单写入本地  
+* file_diff方法比较本次榜单和上次所获取的榜单，返回此次消失的热搜名称
