@@ -1,7 +1,6 @@
 # author: hebetian
 import requests
 import logging
-import jsonpath
 
 
 base_url = 'https://weibo.com'
@@ -28,8 +27,8 @@ def get_hot_band_response():
         else:
             logging.error('status_code: %s' % response.status_code)
             return None
-    except requests.RequestException:
-        logging.error('status_code: %s' % response.status_code)
+    except requests.RequestException as e:
+        logging.error('request error: %s' % e)
         return None
 
 
@@ -38,7 +37,7 @@ def check_response(response_data):
     """
     检查response_data是否为json格式且ok字段为1
     """
-    if type(response_data) == dict and response_data['ok'] == 1:
+    if type(response_data) == dict and response_data.get('ok') == 1 and response_data.get('data').get('realtime') is not None:
         return True
     else:
         logging.error('response data error: %s' % response_data)
@@ -52,7 +51,7 @@ def get_hot_band_allmsg(response):
     从response_data的data.realtime字段中提取热搜列表所有信息
     """
     try:
-        hot_band_allmsg = jsonpath.jsonpath(response, 'data.realtime')
+        hot_band_allmsg = response.get('data').get('realtime')
         return hot_band_allmsg
     except Exception as e:
         logging.error('get hot band all msg error: %s' % e)
@@ -70,8 +69,12 @@ def get_hot_band_list(hot_band_allmsg):
     try:
         hot_band_list = []
         for item in hot_band_allmsg:
+            if item.get('label_name') is None or item.get('note') is None or item.get('num') is None:
+                logging.error('item error: %s' % item)
+                return None
             label_name = item.get('label_name', '')
-            label_name = None if label_name == '' else label_name
+            if label_name == '':
+                label_name = None
 
             hot_band = {
                 'note': item.get('note', ''),
@@ -82,7 +85,7 @@ def get_hot_band_list(hot_band_allmsg):
             hot_band_list.append(hot_band)
             
         return hot_band_list
-        
+
     except Exception as e:
         logging.error('get hot band list error: %s' % e)
         return None
