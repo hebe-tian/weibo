@@ -37,7 +37,10 @@ def check_response(response_data):
     """
     检查response_data是否为json格式且ok字段为1
     """
-    if type(response_data) == dict and response_data.get('ok') == 1 and response_data.get('data').get('realtime') is not None:
+    if (isinstance(response_data, dict) 
+    and response_data.get('ok') == 1 
+    and isinstance(response_data.get('data'), dict) 
+    and response_data.get('data').get('realtime') is not None):
         return True
     else:
         logging.error('response data error: %s' % response_data)
@@ -53,7 +56,7 @@ def get_hot_band_allmsg(response):
     try:
         hot_band_allmsg = response.get('data').get('realtime')
         return hot_band_allmsg
-    except Exception as e:
+    except (AttributeError, KeyError) as e:
         logging.error('get hot band all msg error: %s' % e)
         return None
 

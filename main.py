@@ -1,14 +1,20 @@
 import logging
 import get_hot_band
-import datetime
-import pytz
+from datetime import datetime, timezone, timedelta
+from zoneinfo import ZoneInfo
 import json
 import os
 
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+
 def main():
     # 获取当前时间
-    dt = datetime.datetime.now(tz=pytz.timezone('Asia/Shanghai'))
+    dt = datetime.now(ZoneInfo('Asia/Shanghai'))
     logging.info(dt)
 
     response_data = get_hot_band.get_hot_band_response()
@@ -19,7 +25,7 @@ def main():
     '''
     if get_hot_band.check_response(response_data):
         hot_band_allmsg = get_hot_band.get_hot_band_allmsg(response_data)
-        hot_band_info = json.dumps(get_hot_band.get_hot_band_list(hot_band_allmsg[0]), ensure_ascii=False, indent=2)
+        hot_band_info = json.dumps(get_hot_band.get_hot_band_list(hot_band_allmsg), ensure_ascii=False, indent=2)
         logging.info(hot_band_info)
         
         snapshot_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'snapshot')
