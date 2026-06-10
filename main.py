@@ -1,14 +1,41 @@
-import weibo_hot_band
+import logging
+import get_hot_band
 import datetime
 import pytz
+import json
+import os
 
 
-dt = datetime.datetime.now()
-print(dt.astimezone(tz=pytz.timezone('Asia/Shanghai')))
+def main():
+    # 获取当前时间
+    dt = datetime.datetime.now(tz=pytz.timezone('Asia/Shanghai'))
+    logging.info(dt)
 
-hot_band = weibo_hot_band.weibo_hot_band()
-print(hot_band)
+    response_data = get_hot_band.get_hot_band_response()
 
-# topic = weibo_hot_band.weibo_topic_band()
-# print(topic)
+    '''
+    hot_band_allmsg: response_data的data.realtime字段
+    hot_band_info: 热搜列表所有信息，包含名称、标签、热度
+    '''
+    if get_hot_band.check_response(response_data):
+        hot_band_allmsg = get_hot_band.get_hot_band_allmsg(response_data)
+        hot_band_info = json.dumps(get_hot_band.get_hot_band_list(hot_band_allmsg[0]), ensure_ascii=False, indent=2)
+        logging.info(hot_band_info)
+        
+        snapshot_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'snapshot')
+        os.makedirs(snapshot_dir, exist_ok=True)
+        filename = dt.strftime('%Y%m%d%H') + '.json'
+        filepath = os.path.join(snapshot_dir, filename)
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.write(hot_band_info)
+        logging.info('save hot band info to %s' % filepath)
+
+    else:    
+        logging.error('Failed to get hot band. Denied by the Weibo server.')
+
+if __name__ == '__main__':
+    main()
+
+
+# TODO:analyze hot_band_info
 
