@@ -29,9 +29,14 @@ jobs:
       run: |
         python main.py
 
+    - name: Create timestamp
+      id: timestamp
+      run: |
+        echo "timestamp=$(TZ='Asia/Shanghai' date +'%Y%m%d%H')" >> $GITHUB_OUTPUT
+
     - name: Commit and push snapshot
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: snapshot: $(TZ='Asia/Shanghai' date +'%Y%m%d%H')
+        commit_message: "snapshot: ${{ steps.timestamp.outputs.timestamp }}"
         files: snapshot/*
         
