@@ -30,7 +30,7 @@ def main():
         
         snapshot_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'snapshot')
         os.makedirs(snapshot_dir, exist_ok=True)
-        filename = dt.strftime('%Y%m%d%H') + '.json'
+        filename = dt.strftime('%Y%m%d-%H%M') + '.json'
         filepath = os.path.join(snapshot_dir, filename)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(hot_band_info)
