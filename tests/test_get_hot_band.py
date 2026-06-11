@@ -58,7 +58,9 @@ class TestGetHotBandList:
 
     def test_get_hot_band_list_without_msg(self, bandlist_msg_without_msg):
         result = get_hot_band_list(bandlist_msg_without_msg)
-        assert result == None
+        assert "热搜话题2" in str(result)
+        assert "热搜话题3" not in str(result)
+        assert "热搜话题1" not in str(result)
 
     def test_get_hot_band_list_with_empty_list(self, bandlist_msg_with_empty_list):
         result = get_hot_band_list(bandlist_msg_with_empty_list)
