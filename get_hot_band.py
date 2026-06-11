@@ -71,22 +71,33 @@ def get_hot_band_list(hot_band_allmsg):
        """
     try:
         hot_band_list = []
-        for item in hot_band_allmsg:
-            if item.get('label_name') is None or item.get('note') is None or item.get('num') is None:
-                logging.error('item error: %s' % item)
-                continue
-            label_name = item.get('label_name', '')
-            if label_name == '':
-                label_name = None
+        if isinstance(hot_band_allmsg, list):        
+            for item in hot_band_allmsg:
+                if isinstance(item, dict):
+                    
+                    if item.get('note') is None or item.get('num') is None:
+                        logging.error('item data error: %s' % item)
+                        continue
+                    label_name = item.get('label_name', '')
+                    if label_name == '':
+                        label_name = None
 
-            hot_band = {
-                'note': item.get('note', ''),
-                'tag': label_name,
-                'num': item.get('num', 0)
-            }
+                    hot_band = {
+                        'note': item.get('note', ''),
+                        'tag': label_name,
+                        'num': item.get('num', 0)
+                    }
 
-            hot_band_list.append(hot_band)
-            
+                    hot_band_list.append(hot_band)
+                
+                else:
+                    logging.error('item type error: %s' % item)
+                    continue
+ 
+        else:
+            logging.error('hot band all msg type error: %s' % hot_band_allmsg)
+            return None
+
         return hot_band_list
 
     except Exception as e:
