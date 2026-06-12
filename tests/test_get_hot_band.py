@@ -30,6 +30,7 @@ class TestGetHotBandAllmsg:
     "Test the get_hot_band_allmsg function"
     def test_get_hot_band_allmsg_with_valid_response(self, valid_response):
         result = get_hot_band_allmsg(valid_response)
+        assert result[0].get("rank") == 0
         assert result[0].get("note") == "热搜话题1"
         assert result[0].get("label_name") == "热"
         assert result[0].get("num") == 1234567

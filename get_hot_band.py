@@ -63,7 +63,8 @@ def get_hot_band_allmsg(response):
 # 保存热搜名称、标签、热度
 def get_hot_band_list(hot_band_allmsg):
     """
-    使用列表保存热搜名称、标签、热度，{
+    使用列表保存热搜排名、名称、标签、热度，{
+        'rank': 排名,
         'note': 名称,
         'tag': 标签,
         'num': 热度
@@ -83,6 +84,7 @@ def get_hot_band_list(hot_band_allmsg):
                         label_name = None
 
                     hot_band = {
+                        'rank': item.get('rank', None),
                         'note': item.get('note', ''),
                         'tag': label_name,
                         'num': item.get('num', 0)

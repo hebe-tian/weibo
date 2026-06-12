@@ -2,7 +2,7 @@ name: get_hotband
 
 on:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/15 * * * *'
   workflow_dispatch:
     inputs:
       branch:
@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
-
+    timeout-minutes: 2
     steps:
       - name: Debug - Show current time
         run: |
@@ -56,3 +56,4 @@ jobs:
         with:
           commit_message: "snapshot: ${{ steps.timestamp.outputs.timestamp }}"
           files: snapshot/*
+          skip_dirty_check: true
