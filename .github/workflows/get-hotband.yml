@@ -2,10 +2,14 @@ name: get_hotband
 
 on:
   schedule:
-    - cron: '0/30 * * * *'
+    - cron: '*/30 * * * *'
   workflow_dispatch:
-  push:
-    branches: [master]
+    inputs:
+      branch:
+        description: 'Branch to run on'
+        required: false
+        default: 'master'
+        type: string
 
 permissions:
   contents: write
@@ -13,6 +17,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master' || github.event_name == 'workflow_dispatch'
 
     steps:
       - name: Debug - Show current time
@@ -23,6 +28,8 @@ jobs:
           echo "Current branch: ${{ github.ref }}"
 
       - uses: actions/checkout@v4
+        with:
+          ref: master
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5

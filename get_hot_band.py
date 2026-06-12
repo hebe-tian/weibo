@@ -93,11 +93,12 @@ def get_hot_band_list(hot_band_allmsg):
                 else:
                     logging.error('item type error: %s' % item)
                     continue
+        
  
         else:
             logging.error('hot band all msg type error: %s' % hot_band_allmsg)
             return None
-
+        logging.info('hot band list length: %s' % len(hot_band_list))
         return hot_band_list
 
     except Exception as e:
