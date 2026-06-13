@@ -10,17 +10,20 @@ def valid_response():
         "data": {
             "realtime": [
                 {
+                    "rank": 0,
                     "note": "热搜话题1",
                     "label_name": "热",
                     "num": 1234567,
                     "allmsg": "allmsgbody"
                 },
                 {
+                    "rank": 1,
                     "note": "热搜话题2",
                     "label_name": "新",
                     "num": 987654
                 },
                 {
+                    "rank": 2,
                     "note": "热搜话题3",
                     "label_name": "",
                     "num": 456789
@@ -40,16 +43,19 @@ def response_error_with_ok():
         "data": {
             "realtime": [
                 {
+                    "rank": 0,
                     "note": "热搜话题1",
                     "label_name": "热",
                     "num": 1234567
                 },
                 {
+                    "rank": 1,
                     "note": "热搜话题2",
                     "label_name": "新",
                     "num": 987654
-                },
+                }, 
                 {
+                    "rank": 2,
                     "note": "热搜话题3",
                     "label_name": "",
                     "num": 456789
@@ -66,17 +72,20 @@ def response_error_without_ok():
     return {
         "data": {
             "realtime": [
-                {
+                {   
+                    "rank": 0,
                     "note": "热搜话题1",
                     "label_name": "热",
                     "num": 1234567
                 },
                 {
+                    "rank": 1,
                     "note": "热搜话题2",
                     "label_name": "新",
                     "num": 987654
                 },
                 {
+                    "rank": 2,
                     "note": "热搜话题3",
                     "label_name": "",
                     "num": 456789
@@ -94,17 +103,20 @@ def response_error_without_realtime():
         "ok": 1,
         "data": {
             "without realtime": [
-                {
+                {   
+                    "rank": 0,
                     "note": "热搜话题1",
                     "label_name": "热",
                     "num": 1234567
                 },
                 {
+                    "rank": 1,
                     "note": "热搜话题2",
                     "label_name": "新",
                     "num": 987654
                 },
                 {
+                    "rank": 2,
                     "note": "热搜话题3",
                     "label_name": "",
                     "num": 456789
@@ -136,14 +148,17 @@ def response_error_without_msg():
         "data": {
             "realtime": [
                 {
+                    "rank": 0,
                     "label_name": "热",
                     "num": 1234567
                 },
                 {
+                    "rank": 1,
                     "note": "热搜话题2",
                     "num": 987654
                 },
                 {
+                    "rank": 2,
                     "note": "热搜话题3",
                     "label_name": "",
                 }
@@ -161,16 +176,19 @@ def response_error_type():
         "data": {
             "realtime": [
                 {
+                    "rank": 0,
                     "note": "热搜话题1",
                     "label_name": "热",
                     "num": 1234567
                 },
                 {
+                    "rank": 1,
                     "note": "热搜话题2",
                     "label_name": "新",
                     "num": 987654
                 },
                 {
+                    "rank": 2,
                     "note": "热搜话题3",
                     "label_name": "",
                     "num": 456789
@@ -187,12 +205,14 @@ def bandlist_valid_msg():
     '''
     return [
         {
+            "rank": 0,
             "note": "热搜话题1",
             "allmsg": "allmsgbody",
             "label_name": "热",
             "num": 1234567
         },
         {
+            "rank": 1,
             "note": "热搜话题2",
             "label_name": "",
             "num": 987654
@@ -206,14 +226,17 @@ def bandlist_msg_without_msg():
     '''
     return [
         {
+            "rank": 0,
             "label_name": "热",
             "num": 1234567
         },
         {
+            "rank": 1,
             "note": "热搜话题2",
             "num": 987654
         },
         {
+            "rank": 2,
             "note": "热搜话题3",
             "label_name": "",
         }
@@ -233,12 +256,14 @@ def bandlist_msg_with_error_type():
     '''
     return '''[
         {
+            "rank": 0,
             "note": "热搜话题1",
             "allmsg": "allmsgbody",
             "label_name": "热",
             "num": 1234567
         },
         {
+            "rank": 1,
             "note": "热搜话题2",
             "label_name": "",
             "num": 987654
