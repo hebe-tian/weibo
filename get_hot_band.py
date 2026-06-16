@@ -77,11 +77,11 @@ def get_hot_band_list(hot_band_allmsg):
                 if isinstance(item, dict):
                     
                     if item.get('note') is None or item.get('num') is None:
-                        logging.error('item data error: %s' % item)
+                        logging.error('This item data error: %s' % item)
                         continue
 
                     if item.get('topic_ad') == 1:
-                        logging.warning('item maybe is a ad: %s, skip it' % item.get('note'))
+                        logging.warning('This item maybe is a ad: %s, skip it' % item.get('note'))
                         continue
 
                     label_name = item.get('label_name', '')

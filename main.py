@@ -26,7 +26,6 @@ def main():
     if get_hot_band.check_response(response_data):
         hot_band_allmsg = get_hot_band.get_hot_band_allmsg(response_data)
         hot_band_info = json.dumps(get_hot_band.get_hot_band_list(hot_band_allmsg), ensure_ascii=False, indent=2)
-        logging.info('hot band len: %s' % len(hot_band_info))
         logging.info(hot_band_info)
         
         snapshot_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'snapshot')
