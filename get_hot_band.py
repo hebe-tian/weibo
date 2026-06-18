@@ -83,7 +83,9 @@ def get_hot_band_list(hot_band_allmsg):
                     if item.get('topic_ad') == 1:
                         logging.warning('This item maybe is a ad: %s, skip it' % item.get('note'))
                         continue
-
+                    
+                    logging.info('This item rank: %s \n' % item.get('rank'))
+                    logging.info('This item: %s \n' % item)
                     label_name = item.get('label_name', '')
                     if label_name == '':
                         label_name = None
